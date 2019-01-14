@@ -1,0 +1,246 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+<%
+	radius = 0.015
+	length = 2
+	link_count = 9
+	link_mass = 5
+	min_inertia = 0.5
+	height = 7.75
+	theta = Math::PI / 12
+
+	# plug
+	inner_radius = 0.01
+	inner_length = 0.01
+
+	def printBlackMaterial()
+	"<material>\n"\
+	"  <ambient>0 0 0 1</ambient>\n"\
+	"  <emissive>0 0 0 1</emissive>\n"\
+	"  <diffuse>0 0 0 1</diffuse>\n"\
+	"  <specular>1 1 1 1</specular>\n"\
+	"</material>\n"
+	end
+%>
+<model name="cable">
+
+  	<self_collide>true</self_collide>
+
+  	<pose> 0 0 <%= height %> 0 0 0</pose>
+
+  	<!-- Enganche esférico inicial -->
+  	<link name="link_0">
+		<pose>0 0 0 0 0 0</pose>
+		<collision name="sphere">
+			<geometry>
+				<sphere>
+					<radius><%= radius %></radius>
+				</sphere>
+			</geometry>
+		</collision>
+		<visual name="sphere">
+			<geometry>
+				<sphere>
+					<radius><%= radius %></radius>
+				</sphere>
+			</geometry>
+			<%= printBlackMaterial() %>
+		</visual>
+	</link>
+
+	<joint name="world" type="fixed">
+    	<child>link_0</child>
+    	<parent>world</parent>
+  	</joint>
+
+<%  #Bucle for para crear todos los links
+	previous_link_end_x = 0;
+	previous_link_end_y = 0;
+
+	for link in 1..link_count
+
+		if link <= (link_count / 2).floor
+			t = theta
+			y = (link - 1) * length * Math::sin(theta) 
+			y_prev = y
+		elsif ((link_count % 2) != 0) && (link == ((link_count / 2).floor + 1))
+			t = 0
+			y = (link_count / 2).floor * length * Math::sin(theta)
+		else
+			t = -theta
+			y = (link_count + 1 - link) * length * Math::sin(theta) 
+		end
+
+		x = previous_link_end_x 
+		previous_link_end_x = previous_link_end_x + length * Math::cos(t)
+
+      	parent = link - 1
+      	child = link
+%>
+	<link name="link_<%= link %>">
+	    <gravity>true</gravity>
+	    <pose><%= x %> 0 <%= -y %> 0 <%= (Math::PI / 2) + t %> 0</pose>
+	    <inertial>
+	      <pose>0 0 <%= length / 2 %> 0 0 0</pose>
+	      <mass><%= link_mass %></mass>
+	      <inertia>
+	        <ixx><%= [link_mass * ( 3 * radius * radius + length * length) /12, min_inertia].max %></ixx>
+	        <iyy><%= [link_mass * ( 3 * radius * radius + length * length) /12, min_inertia].max %></iyy>
+	        <izz><%= [link_mass * radius * radius * 0.5, min_inertia].max %></izz>
+	      </inertia>
+	    </inertial>
+
+	    <collision name="cylinder">
+	      	<pose>0 0 <%= length / 2 %> 0 0 0</pose>
+	      	<geometry>
+		        <cylinder>
+			        <length><%= length %></length>
+			        <radius><%= radius %></radius>
+		        </cylinder>
+	      	</geometry>
+	      	<surface>
+	        	<contact>
+	          		<ode>
+	            		<kp>1e5</kp>
+	            		<kd>1</kd>
+	            		<max_vel>0.1</max_vel>
+	            		<min_depth>0.0015</min_depth>
+	          		</ode>
+	        	</contact>
+	        	<friction>
+	          		<ode>
+			            <mu>1.0</mu>
+	            		<mu2>1.0</mu2>
+	          		</ode>
+	        	</friction>
+	      	</surface>
+	    </collision>
+	    <visual name="cylinder">
+	      	<pose>0 0 <%= length / 2 %> 0 0 0</pose>
+	      	<geometry>
+	        	<cylinder>
+	          		<length><%= length %></length>
+	          		<radius><%= radius %></radius>
+	        	</cylinder>
+	      	</geometry>
+	      	<%= printBlackMaterial() %>
+	    </visual>
+
+	    <collision name="sphere">
+			<geometry>
+				<sphere>
+					<radius><%= radius %></radius>
+				</sphere>
+			</geometry>
+	    	<surface>
+	        	<contact>
+	        		<ode>
+		            	<kp>1e5</kp>
+		            	<kd>1</kd>
+		            	<max_vel>0.1</max_vel>
+		            	<min_depth>0.0015</min_depth>
+	        		</ode>
+	        	</contact>
+	        	<friction>
+	          		<ode>
+	            		<mu>1.0</mu>
+	            		<mu2>1.0</mu2>
+	          		</ode>
+	        	</friction>
+	      	</surface>
+	    </collision>
+	    <visual name="sphere">
+		    <geometry>
+		        <sphere>
+		          	<radius><%= radius %></radius>
+		        </sphere>
+		    </geometry>
+		    <%= printBlackMaterial() %>
+	    </visual>
+	</link>
+
+	<joint name="joint_<%= link %>" type="universal">
+	    <child>link_<%= child %></child>
+	    <parent>link_<%= parent %></parent>
+	    <axis>
+	      	<xyz>0 1 0</xyz>
+	      	<limit>
+	        	<lower><%= -Math::PI / 8 %></lower>
+	        	<upper><%= Math::PI / 8 %></upper>
+	      	</limit>
+	      	<dynamics>
+	      		<friction>50</friction>
+	      	</dynamics>
+	    </axis>
+	    <!--axis2>
+	      	<xyz>-1 0 0</xyz>
+	      	<limit>
+	       		<lower><%= -Math::PI / 4 %></lower>
+	        	<upper><%= Math::PI / 4 %></upper>
+	      	</limit>
+	      	<dynamics>
+	      		<friction>50</friction>
+	      	</dynamics>
+	    </axis2-->
+	    <physics>
+	      	<ode>
+		        <cfm_damping>0</cfm_damping>
+	      	</ode>
+	    </physics>
+	</joint>
+<%  end #Fin del bucle for para crear cilindros, esferas y joints %>
+
+	<!-- Enganche esférico final -->
+  	<link name="link_end">
+		<pose><%= previous_link_end_x %> 0 0 0 0 0</pose>
+		<collision name="sphere">
+			<geometry>
+				<sphere>
+					<radius><%= radius %></radius>
+				</sphere>
+			</geometry>
+		</collision>
+		<visual name="sphere">
+			<geometry>
+				<sphere>
+					<radius><%= radius %></radius>
+				</sphere>
+			</geometry>
+			<%= printBlackMaterial() %>
+		</visual>
+	</link>
+
+	<joint name="joint_<%= link + 1 %>" type="universal">
+	    <child>link_<%= link %></child>
+	    <parent>link_end</parent>
+	    <pose>0 0 <%= length %> 0 0 0</pose>
+	    <axis>
+	      	<xyz>0 1 0</xyz>
+	      	<limit>
+	        	<lower><%= -Math::PI / 8 %></lower>
+	        	<upper><%= Math::PI / 8 %></upper>
+	      	</limit>
+	    </axis>
+	    <!--axis2>
+	      	<xyz>-1 0 0</xyz>
+	      	<limit>
+	       		<lower><%= -Math::PI / 4 %></lower>
+	        	<upper><%= Math::PI / 4 %></upper>
+	      	</limit>
+	    </axis2-->
+	    <physics>
+	      	<ode>
+		        <cfm_damping>0</cfm_damping>
+	      	</ode>
+	    </physics>
+	</joint>
+
+  	<joint name="world_2" type="fixed">
+	    <child>link_end</child>
+    	<parent>world</parent>
+	</joint>
+
+</model>
+</sdf>
+
+<!-- Longitud final del cable: <%= previous_link_end_x %> -->

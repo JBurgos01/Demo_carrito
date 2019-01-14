@@ -1,0 +1,10 @@
+problema 1: robot se descuelga del cable
+Soluciones: Cable recto. Modelo rígido de cable curvo.
+
+problema 2: ur3 en urdf, carrito en sdf
+soluciones:
+	· Convertir el carrito a urdf
+	· Convertir el brazo a sdf (No funciona)
+	· Añadir el urdf del carro como modelo en carpeta aparte
+	· Añadir de alguna forma un modelo en el otro
+	· Utilizar modelo alernativo hecho por mí (problema control)
