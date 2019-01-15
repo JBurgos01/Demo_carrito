@@ -1,0 +1,4 @@
+problemas
+*/*.sdf
+!ur3/model.sdf
+!grass_plane/model.sdf
