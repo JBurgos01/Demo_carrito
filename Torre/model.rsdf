@@ -5,8 +5,8 @@
 				  [-1.73,  9.7], # Medio
 				  [-1.37, 11.6]] # Alto
 
-	n_col_aisl = 1
-	n_fil_aisl = 1
+	n_col_aisl = 1 # Número de columnas con aisladores.
+	n_fil_aisl = 1 # Número de filas con aisladores.
 %>
 <?xml version='1.0'?>
 <sdf version="1.4">

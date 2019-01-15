@@ -1,17 +1,13 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
 <%
-	radius = 0.015
-	length = 2
-	link_count = 9
-	link_mass = 5
-	min_inertia = 0.5
-	height = 7.75
-	theta = Math::PI / 12
-
-	# plug
-	inner_radius = 0.01
-	inner_length = 0.01
+	radius = 0.015			# Radio de los cilindros que forman el cable.
+	length = 2				# Longitud de cada cilindro.
+	link_count = 9			# Número de cilindros.
+	link_mass = 5			# Masa (en Kg) de cada cilindro.
+	min_inertia = 0.5		# Mínimo de inercia (poco importante).
+	height = 7.75			# Altura a la que aparece el cable en caso de que se inserte a través de Gazebo por separado.
+	theta = Math::PI / 12	# Ángulo que forma la pendiente del cable.
 
 	def printBlackMaterial()
 	"<material>\n"\

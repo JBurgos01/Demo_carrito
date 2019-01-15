@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <%
-	#Variables
+	# Visualización de algunos parámetros:
 	#
 	# | |__| |
 	# | |  | |
@@ -9,8 +9,9 @@
 	# | |  | | X = L+H+h/2
 	# 	  |<------>|
 
+	# Variables
 	L = 0.04	# Longitud del palo que une la rueda y el vehículo.
-	a = 0.025	# Radio del palo
+	a = 0.025	# Radio del palo.
 
 	R = 0.1		# Radio de la parte exterior de la rueda.
 	H = 0.02	# Altura (grosor) del cilindro exterior.

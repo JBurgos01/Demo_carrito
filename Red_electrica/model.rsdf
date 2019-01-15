@@ -1,10 +1,10 @@
 <%
-    L = 17.4548 # Longitud del cable (definida al final del model.sdf del cable).
+    L = 17.4548 # Longitud del cable (queda escrita al final del model.sdf del cable al compilar).
     N = 2       # Número de torres.
-    S = 0.4     # Separación entre cables.
-    R = 0.015   # Radio del cable
+    S = 0.4     # Separación entre los dos cables.
+    R = 0.015   # Radio del cable (viene definido en el modelo del cable).
 
-    CALBE_TYPE = 0  # Tipo de cable: 0 = modelo cilindros y bolas, 1 = modelo simple recto, 2 = modelo stl
+    CALBE_TYPE = 0  # Tipo de cable: 0 = modelo cilindros y bolas, 1 = modelo simple recto, 2 = modelo stl (en construcción).
 
     def printBlackMaterial()
     "<material>\n"\
