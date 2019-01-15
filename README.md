@@ -1,0 +1,42 @@
+El presente repositorio es simplemente una colección de modelos necesarios para la simulación de un carro con un brazo robótico que coloque separadores en una línea eléctrica.
+
+Cada modelo consta de un model.rsdf, que viene a ser un modelo en sdf pero escrito en Embeded Ruby, un lenguaje que permite introducir variables y crear ficheros (en este caso sdf a patir de rsdf).
+Para crear los sdf a partir de cada rsdf, habría que abrir una consola, y en la ruta del fichero que se quiere compilar, habria que introducir:
+
+	erb model.rsdf > model.sdf
+
+Con el objetivo de simplificar la tarea, se ha creado un script en el directorio raíz llamado erb_all.sh. Este script compila todos los model.rsdf y crea todos los model.sdf en sus respectivas carpetas.
+Por lo tanto, para crear todos los model.sdf necesarios, simplemente habrá que ir en una terminal al directorio raíz y ejecutar: 
+
+	./erb_all.sh
+
+Es posible que esto de error en un principio porque el script se haya descargado como un fichero de texto y no como un archivo ejecutable. Para solucionar esto, en una terminal introducir:
+
+	sudo chmod +x erb_all.sh
+
+Estos modelos han de ser puestos en una carpeta en la que Gazebo sepa que ha de buscar para encontrar modelos, ya que si no no será posible introducirlos desde Gazebo. Para ello existen dos alternativas:
+
+	- Añadir todas las carpetas con los modelos en el directorio ~/.gazebo/models/, que es un directorio que Gazebo ya conoce.
+	- Poner todos los modelos en otra carpeta pero indicarle a Gazebo que ha de mirar en esa carpeta también para buscar modelos. Esto se consigue con el comando:
+
+		export GAZEBO_MODEL_PATH=/ruta/a_mi/carpeta_de/modelos:$GAZEBO_MODEL_PATH
+		(ejemplo: export export GAZEBO_MODEL_PATH=/home/disam/.gazebo/modelos_RE:$GAZEBO_MODEL_PATH)
+
+	Este comando puede o bien introducirse en la terminal cada vez que se quiera abrir Gazebo, o bien añadirse al final del fichero ~/.bashrc
+
+La segunda opción es la preferible.
+
+A continuación se expone lo que representa cada uno de los modelos que hay en este repositorio:
+
+Aislador: Aislador cerámico que cuelga de la torre eléctrica y que sostiene el apoyo del cable.
+Apoyo_cables: Bifurcador que sale del aislador cerámico y que permite sostener dos cables a la torre.
+Cable: Modelo del cable.
+Carrito: Modelo del carrito (utiliza varios otros modelos).
+Grapa: Modelo de la grapa que se va a colocar en los cables.
+grass_plane: Plano de hierba. No requiere un model.rsdf, ya que no tiene parámetros.
+Herramienta: Modelo de la herramienta que se encarga de colocar la grapa y de atornillarla.
+Red_electrica: Modelo de un par de torres con sus respectivos aisladores y bifurcadores, sosteniendo un par de cables.
+Rueda: Modelo de la rueda del carrito.
+Torre: Modelo de la torre eléctrica.
+Tren: modelo de cada uno de los trenes que compone el carrito.
+ur3: modelo del brazo robótico UR3.
