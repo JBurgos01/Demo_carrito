@@ -32,7 +32,7 @@ A continuación se expone lo que representa cada uno de los modelos que hay en e
 
 	Apoyo_cables: Bifurcador que sale del aislador cerámico y que permite sostener dos cables a la torre.
 
-	Cable: Modelo del cable.
+	Cable: Modelo del cable formado por cilindros y esferas que los conectan.
 
 	Carrito: Modelo del carrito (utiliza varios otros modelos).
 
@@ -50,5 +50,8 @@ A continuación se expone lo que representa cada uno de los modelos que hay en e
 
 	Tren: modelo de cada uno de los trenes que compone el carrito.
 
-	ur3: modelo del brazo robótico UR3.
+	ur3: modelo del brazo robótico UR3. No requiere un model.rsdf, ya que no tiene parámetros.
 
+Como se deduce de lo anterior, algunos modelos no están hechos para ultilizarlos por separado, sino que forman parte de otros. Realmente, los únicos dos modelos que se usan por separado son el tren, la red eléctrica, la grapa y el plano de césped.
+
+Cada uno de los ficheros erb tiene una serie de parámetros modificables, que se explican en detalle en cada uno de ellos.
