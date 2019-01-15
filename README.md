@@ -28,15 +28,27 @@ La segunda opción es la preferible.
 
 A continuación se expone lo que representa cada uno de los modelos que hay en este repositorio:
 
-Aislador: Aislador cerámico que cuelga de la torre eléctrica y que sostiene el apoyo del cable.
-Apoyo_cables: Bifurcador que sale del aislador cerámico y que permite sostener dos cables a la torre.
-Cable: Modelo del cable.
-Carrito: Modelo del carrito (utiliza varios otros modelos).
-Grapa: Modelo de la grapa que se va a colocar en los cables.
-grass_plane: Plano de hierba. No requiere un model.rsdf, ya que no tiene parámetros.
-Herramienta: Modelo de la herramienta que se encarga de colocar la grapa y de atornillarla.
-Red_electrica: Modelo de un par de torres con sus respectivos aisladores y bifurcadores, sosteniendo un par de cables.
-Rueda: Modelo de la rueda del carrito.
-Torre: Modelo de la torre eléctrica.
-Tren: modelo de cada uno de los trenes que compone el carrito.
-ur3: modelo del brazo robótico UR3.
+	Aislador: Aislador cerámico que cuelga de la torre eléctrica y que sostiene el apoyo del cable.
+
+	Apoyo_cables: Bifurcador que sale del aislador cerámico y que permite sostener dos cables a la torre.
+
+	Cable: Modelo del cable.
+
+	Carrito: Modelo del carrito (utiliza varios otros modelos).
+
+	Grapa: Modelo de la grapa que se va a colocar en los cables.
+
+	grass_plane: Plano de hierba. No requiere un model.rsdf, ya que no tiene parámetros.
+
+	Herramienta: Modelo de la herramienta que se encarga de colocar la grapa y de atornillarla.
+
+	Red_electrica: Modelo de un par de torres con sus respectivos aisladores y bifurcadores, sosteniendo un par de cables.
+
+	Rueda: Modelo de la rueda del carrito.
+
+	Torre: Modelo de la torre eléctrica.
+
+	Tren: modelo de cada uno de los trenes que compone el carrito.
+
+	ur3: modelo del brazo robótico UR3.
+
